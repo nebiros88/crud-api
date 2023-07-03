@@ -1,10 +1,8 @@
 import http from "http";
 import "dotenv/config";
 
-//import { CustomError } from "../types/types";
 import { controller } from "../controller/controller";
-
-//function handleError(response: http.ServerResponse, error: CustomError | Error): void {}
+import { handleError } from "../services/error.service";
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,8 +11,7 @@ const server = http.createServer(async (request: http.IncomingMessage, response:
   try {
     return await controller(request, response);
   } catch (error: any) {
-    console.log(error);
-    //handleError(response, error);
+    handleError(response, error);
   }
 });
 

@@ -1,7 +1,9 @@
+import { v4 } from "uuid";
+
 import { dataBase } from "../db/db";
 import { User } from "../types/types";
 
-export async function getUsers(): Promise<User[]> {
+export function getUsers(): User[] {
   let users = [];
   for (const user of dataBase) {
     users.push({
@@ -11,5 +13,11 @@ export async function getUsers(): Promise<User[]> {
       hobbies: user[1].hobbies,
     });
   }
-  return Promise.resolve(users);
+  return users;
+}
+
+export async function createUser(user: User): Promise<void> {
+  const userId = v4();
+  dataBase.set(userId, user);
+  return Promise.resolve();
 }
